@@ -1,0 +1,13 @@
+# binaries
+hello-go
+*.exe
+*.out
+
+# go build cache / temp
+*.test
+*.log
+
+# editor
+.vscode/
+.idea/
+.DS_Store
