@@ -1,0 +1,24 @@
+services:
+  redis:
+    image: redis:7
+    container_name: hello-go-redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+
+  hello-go:
+    build: .
+    image: hello-go:local
+    container_name: hello-go
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      - REDIS_ADDR=redis:6379
+    depends_on:
+      - redis
+
+volumes:
+  redis-data:
+
