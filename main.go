@@ -83,8 +83,11 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	redisAddr := getEnv("REDIS_ADDR", "127.0.0.1:6379")
-	rdb = redis.NewClient(&redis.Options{Addr: redisAddr})
-
+        redisPwd  := getEnv("REDIS_PASSWORD", "")
+rdb = redis.NewClient(&redis.Options{
+	Addr:     redisAddr,
+	Password: redisPwd,
+})
 	mux := http.NewServeMux()
 	mux.HandleFunc("/health", healthHandler)
 	mux.HandleFunc("/redis/set", setHandler)
