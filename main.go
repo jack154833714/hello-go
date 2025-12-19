@@ -34,7 +34,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	fmt.Fprintln(w, "ok")
+	fmt.Fprintln(w, "hello world!")
 }
 
 func setHandler(w http.ResponseWriter, r *http.Request) {
@@ -83,11 +83,11 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	redisAddr := getEnv("REDIS_ADDR", "127.0.0.1:6379")
-        redisPwd  := getEnv("REDIS_PASSWORD", "")
-rdb = redis.NewClient(&redis.Options{
-	Addr:     redisAddr,
-	Password: redisPwd,
-})
+	redisPwd := getEnv("REDIS_PASSWORD", "")
+	rdb = redis.NewClient(&redis.Options{
+		Addr:     redisAddr,
+		Password: redisPwd,
+	})
 	mux := http.NewServeMux()
 	mux.HandleFunc("/health", healthHandler)
 	mux.HandleFunc("/redis/set", setHandler)
@@ -97,4 +97,3 @@ rdb = redis.NewClient(&redis.Options{
 	log.Println("listening on", addr, "redis:", redisAddr)
 	log.Fatal(http.ListenAndServe(addr, mux))
 }
-
